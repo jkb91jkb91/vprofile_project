@@ -1,0 +1,26 @@
+
+
+
+
+FROM alpine:latest
+
+# Aktualizuj repozytoria i zainstaluj JDK 8
+RUN apk update && \
+    apk add openjdk8
+
+# Ustaw zmienne środowiskowe dla JDK 8
+ENV JAVA_HOME=/usr/lib/jvm/java-1.8-openjdk
+ENV PATH="$JAVA_HOME/bin:$PATH"
+
+# Instaluj Jenkinsa (zakładam, że używasz komendy uruchamiającej Jenkinsa)
+RUN apk add jenkins
+
+# Otwórz port 8080, który jest używany przez Jenkinsa
+EXPOSE 8080
+
+# Uruchom Jenkinsa przy starcie kontenera
+CMD ["java", "-jar", "/usr/share/webapps/jenkins/jenkins.war"]
+
+
+
+# Instaluj Jenkinsa

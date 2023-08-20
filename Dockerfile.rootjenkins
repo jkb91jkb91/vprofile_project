@@ -1,0 +1,17 @@
+# Użyj oficjalnego obrazu Jenkinsa jako bazowego
+FROM jenkins/jenkins:lts
+
+# Przełącz się na użytkownika root, aby zainstalować JDK
+USER root
+
+
+RUN echo "deb http://archive.debian.org/debian/ jessie main" > /etc/apt/sources.list && \
+    echo "Acquire::Check-Valid-Until false;" > /etc/apt/apt.conf.d/10-nocheckvalid && \
+    apt-get update
+
+# Zainstaluj JDK 8
+RUN apt-get install -y openjdk-8-jdk
+
+
+# Powrót do użytkownika jenkins
+USER jenkins
