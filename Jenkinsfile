@@ -4,7 +4,7 @@ pipeline {
     stages{
         stage('fetch code') {
           steps{
-              git branch: 'vp-rem', url: "https://github.com/devopshydclub/vprofile-repo.git"
+              git branch: 'jenkins_sonar_nexus', url: "https://github.com/jkb91jkb91/vprofile_project/blob/jenkins_sonar_nexus/Jenkinsfile"
           }  
         }
 
