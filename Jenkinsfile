@@ -1,4 +1,4 @@
-def myFunctions = load './myFunctions.groovy'
+def myFunctions = load './groovy_scripts/myFunctions.groovy'
 
 pipeline {
     agent any
