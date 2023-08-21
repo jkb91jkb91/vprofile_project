@@ -1,6 +1,6 @@
 def myFunctions = load './myFunctions.groovy'
 
-node {
+pipeline {
 
     agent any
         tools {
@@ -26,9 +26,15 @@ node {
                     echo "${env.PRINT_OK}"
                     myFunctions.printSomething()
                     myFunctions.printWithColor("colored text")
+                }
+                node {
+
                     sh 'mvn --version'
                     sh 'mvn install -DskipTests'
+
                 }
+                   
+                
             }
             post {
                 success {
