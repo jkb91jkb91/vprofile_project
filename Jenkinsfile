@@ -22,16 +22,20 @@ pipeline {
 
         stage('Build') {
             steps {
-                echo "${env.PRINT_OK}"
-                myFunctions.printSomething()
-                myFunctions.printWithColor("colored text")
-                sh 'mvn --version'
-                sh 'mvn install -DskipTests'
+                script {
+                    echo "${env.PRINT_OK}"
+                    myFunctions.printSomething()
+                    myFunctions.printWithColor("colored text")
+                    sh 'mvn --version'
+                    sh 'mvn install -DskipTests'
+                }
             }
             post {
                 success {
-                    printWithColor("Success")
-                    archiveArtifacts artifacts: '**/*.war'
+                    script {
+                        printWithColor("Success")
+                        archiveArtifacts artifacts: '**/*.war'
+                    }
                 }
             }
         }
