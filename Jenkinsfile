@@ -1,3 +1,5 @@
+def myFunctions = load './myFunctions.groovy'
+
 pipeline {
 
     agent any
@@ -21,7 +23,8 @@ pipeline {
         stage('Build') {
             steps {
                 echo "${env.PRINT_OK}"
-                printSomething() //trigger groovy func
+                myFunctions.printSomething()
+                myFunctions.printWithColor("colored text")
                 sh 'mvn --version'
                 sh 'mvn install -DskipTests'
             }
