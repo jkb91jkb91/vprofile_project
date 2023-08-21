@@ -32,10 +32,10 @@ pipeline {
             }
             post {
                 success {
-                    script {
-                        printWithColor("Success")
+             
+                       
                         archiveArtifacts artifacts: '**/*.war'
-                    }
+                    
                 }
             }
         }
