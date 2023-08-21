@@ -1,9 +1,16 @@
 pipeline {
+
+    
     agent any
         tools {
         maven "MAVEN3"
         jdk "OracleJDK8"
     }
+    enivironment {
+        PRINT_OK='ok'
+        PRINT_FAIL='fail'
+    }
+    
 
     stages{
         stage('fetch code') {
@@ -14,6 +21,7 @@ pipeline {
 
         stage('Build') {
             steps {
+                echo ${PRINT_OK}
                 printSomething() //trigger groovy func
                 sh 'mvn --version'
                 sh 'mvn install -DskipTests'
