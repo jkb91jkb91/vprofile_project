@@ -1,6 +1,6 @@
 def myFunctions = load './myFunctions.groovy'
 
-pipeline {
+node {
 
     agent any
         tools {
