@@ -1,6 +1,5 @@
 pipeline {
 
-    
     agent any
         tools {
         maven "MAVEN3"
@@ -28,7 +27,7 @@ pipeline {
             }
             post {
                 success {
-                    echo "Now Archiving."
+                    printWithColor("Success")
                     archiveArtifacts artifacts: '**/*.war'
                 }
             }
@@ -50,4 +49,8 @@ pipeline {
 
 def printSomething() {
     echo "groovy func"
+}
+
+def printWithColor(param) {
+     echo "\u001B[31m${param}\u001B[0m" 
 }
