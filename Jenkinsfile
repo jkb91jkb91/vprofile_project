@@ -14,6 +14,7 @@ pipeline {
 
         stage('Build') {
             steps {
+                printSomething() //trigger groovy func
                 sh 'mvn --version'
                 sh 'mvn install -DskipTests'
             }
@@ -37,4 +38,8 @@ pipeline {
 
         }
     }
+}
+
+def printSomething() {
+    echo "groovy func"
 }
