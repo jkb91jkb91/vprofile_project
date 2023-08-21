@@ -21,7 +21,7 @@ pipeline {
 
         stage('Build') {
             steps {
-                echo ${env.PRINT_OK}
+                echo "${env.PRINT_OK}"
                 printSomething() //trigger groovy func
                 sh 'mvn --version'
                 sh 'mvn install -DskipTests'
