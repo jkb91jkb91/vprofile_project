@@ -6,7 +6,7 @@ pipeline {
         maven "MAVEN3"
         jdk "OracleJDK8"
     }
-    enivironment {
+    environment {
         PRINT_OK='ok'
         PRINT_FAIL='fail'
     }
