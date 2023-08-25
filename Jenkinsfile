@@ -5,7 +5,12 @@ pipeline {
     }
   environment {
     JDK_VERSION = 'OracleJDK8'
+
     JAVA_HOME = '/usr/local/jdk8'
+    JAVA_HOME='/opt/java/openjdk'
+
+
+
 }
 
     stages {
@@ -17,7 +22,8 @@ pipeline {
 
         stage('Build and Test') {
             steps {
-                tool name: 'OracleJDK8', type: 'hudson.model.JDK'
+                tool name: env.JDK_VERSION, type: 'hudson.model.JDK'
+                sh 'export JAVA_HOME=$JAVA_HOME_8' // Ustawienie JAVA_HOME na JDK 8
                 echo "${env.PRINT_OK}"
                 sh 'mvn --version'
                 sh 'mvn install -DskipTests'
@@ -33,6 +39,7 @@ pipeline {
             steps {
                 script {
                     tool name: env.JDK_VERSION, type: 'hudson.model.JDK'
+                    sh 'export JAVA_HOME=$JAVA_HOME_8' // Ustawienie JAVA_HOME na JDK 8
                     sh 'mvn test'
                 }
             }
@@ -41,8 +48,8 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 script {
-                    tool name: 'OracleJDK11', type: 'hudson.model.JDK'
-                    def scannerHome = tool name: 'son4.7', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
+                    tool name: env.JDK_VERSION, type: 'hudson.model.JDK'
+                    sh 'export JAVA_HOME=$JAVA_HOME_11' // Ustawienie JAVA_HOME na JDK 8
                     withSonarQubeEnv('sonar') {
                         sh """
                             ${scannerHome}/bin/sonar-scanner \
@@ -53,8 +60,7 @@ pipeline {
                             -Dsonar.java.binaries=target/test-classes/com/visualpathit/account/controllerTest/ \
                             -Dsonar.junit.reportsPath=target/surefire-report/ \
                             -Dsonar.jacoco.reportsPath=target/jacoco.exec \
-                            -Dsonar.java.checkstyle.reportPaths=target/checkstyle-result.xml \
-                            -Dsonar.java.source=11
+                            -Dsonar.java.checkstyle.reportPaths=target/checkstyle-result.xml
                         """
                     }
                 }
