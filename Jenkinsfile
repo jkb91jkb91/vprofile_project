@@ -5,7 +5,7 @@ pipeline {
     }
   environment {
     JDK_VERSION = 'OracleJDK8'
-    JAVA_HOME = '/usr/local/jdk1.8.0_131'
+    JAVA_HOME = '/usr/local/jdk8'
 }
 
     stages {
