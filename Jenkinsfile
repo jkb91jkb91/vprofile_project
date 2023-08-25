@@ -39,7 +39,7 @@ pipeline {
 
         stage('Code Analysis') {
             environment {
-                scannerHome = tool 'son4.7'
+                scannerHome = tool 'son4.7',  type: 'hudson.plugins.sonar.SonarRunnerInstallation'
             }
             steps {
                     withSonarQubeEnv('sonar') {
