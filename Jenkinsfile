@@ -18,7 +18,7 @@ pipeline {
             }
         }
 
-        stage('Build') {
+        stage('Build and Test') {
             steps {
                 script {
                     echo "${env.PRINT_OK}"
@@ -39,7 +39,7 @@ pipeline {
             }
         }
 
-        stage('sonar') {
+        stage('SonarQube Analysis') {
             steps {
                 script {
                     def scannerHome = tool name: 'son4.7', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
