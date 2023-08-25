@@ -47,8 +47,7 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 script {
-                    tool name: env.JDK_VERSION, type: 'hudson.model.JDK'
-                    sh 'export JAVA_HOME=$JAVA_HOME_11' // Ustawienie JAVA_HOME na JDK 8
+                    sh 'export JAVA_HOME="/opt/java/openjdk"'
                     withSonarQubeEnv('sonar') {
                         sh """
                             ${scannerHome}/bin/sonar-scanner \
