@@ -39,7 +39,7 @@ pipeline {
 
         stage('Code Analysis') {
             environment {
-                def scannerHome = tool name: 'son4.7'
+                scannerHome = tool 'son4.7'
             }
             steps {
                     withSonarQubeEnv('sonar') {
