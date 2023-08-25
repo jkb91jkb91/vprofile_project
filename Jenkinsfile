@@ -1,11 +1,13 @@
 pipeline {
     agent any
 
-    tools {
+   tools {
         // Definicja zmiennych JDK w sekcji tools
-        jdk 'OracleJDK8', 'OracleJDK11'
+        maven 'MAVEN3'
     }
-
+     environment {
+        JDK_VERSION = 'OracleJDK8'
+    }
     
     stages {
         stage('fetch code') {
