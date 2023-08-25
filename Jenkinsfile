@@ -1,10 +1,6 @@
-
-
-
-
 pipeline {
     agent any
-     tools {
+    tools {
         maven "MAVEN3"
     }
     environment {
@@ -36,8 +32,8 @@ pipeline {
             steps {
                 script {
                     tool name: env.JDK_VERSION, type: 'hudson.model.JDK'
+                    sh 'mvn test'
                 }
-                sh 'mvn test'
             }
         }
 
