@@ -3,9 +3,10 @@ pipeline {
     tools {
         maven "MAVEN3"
     }
-    environment {
-        JDK_VERSION = 'OracleJDK8'
-    }
+  environment {
+    JDK_VERSION = 'OracleJDK8'
+    JAVA_HOME = '/usr/local/jdk1.8.0_131'
+}
 
     stages {
         stage('fetch code') {
