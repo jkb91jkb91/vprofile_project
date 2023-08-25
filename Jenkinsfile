@@ -48,7 +48,7 @@ pipeline {
             steps {
                 script {
                     sh 'export JAVA_HOME="/opt/java/openjdk"'
-                    def scannerHome = tool name: 'sonar', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
+                    def scannerHome = tool name: 'son4.7', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
                     withSonarQubeEnv('sonar') {
                         sh """
                             ${scannerHome}/bin/sonar-scanner \
