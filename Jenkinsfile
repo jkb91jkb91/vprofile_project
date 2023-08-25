@@ -39,7 +39,7 @@ pipeline {
             }
         }
 
-        stage('Code Analysis') {
+        stage('sonar') {
             steps {
                 script {
                     def scannerHome = tool name: 'son4.7', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
