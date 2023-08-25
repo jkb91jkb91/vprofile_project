@@ -2,7 +2,7 @@ pipeline {
     agent any
     tools {
         maven "MAVEN3"
-        jdk "OracleJDK8"
+        jdk "jdk8" // Nazwa skonfigurowanego JDK 8 w Jenkinsie
     }
     environment {
         PRINT_OK='ok'
@@ -10,7 +10,7 @@ pipeline {
     }
 
     stages {
-        stage('Fetch Code') {
+        stage('fetch code') {
             steps {
                 git branch: 'jenkins_sonar_nexus', url: "https://github.com/jkb91jkb91/vprofile_project/"
             }
@@ -38,13 +38,13 @@ pipeline {
         }
 
         stage('Code Analysis') {
-            environment {
-                scannerHome = tool 'son4.7',  type: 'hudson.plugins.sonar.SonarRunnerInstallation'
-            }
             steps {
+                script {
+                    def scannerHome = tool name: 'son4.7', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
                     withSonarQubeEnv('sonar') {
-                         sh """
-                            ${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=project_vprofile \
+                        sh """
+                            ${scannerHome}/bin/sonar-scanner \
+                            -Dsonar.projectKey=project_vprofile \
                             -Dsonar.projectName=vprofile \
                             -Dsonar.projectVersion=1.0 \
                             -Dsonar.sources=src/ \
@@ -54,7 +54,7 @@ pipeline {
                             -Dsonar.java.checkstyle.reportPaths=target/checkstyle-result.xml
                         """
                     }
-                
+                }
             }
         }
     }
