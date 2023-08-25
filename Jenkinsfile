@@ -6,7 +6,7 @@ pipeline {
   environment {
     JDK_VERSION = 'OracleJDK8'
     JAVA_HOME = '/usr/local/jdk8'
-    SONAR_TOKEN = credentials('sonar')
+    SONAR_TOKEN = credentials('jenkins')
 }
 
 
