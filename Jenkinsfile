@@ -1,7 +1,12 @@
 pipeline {
     agent any
 
+    tools {
+        // Definicja zmiennych JDK w sekcji tools
+        jdk 'OracleJDK8', 'OracleJDK11'
+    }
 
+    
     stages {
         stage('fetch code') {
             steps {
