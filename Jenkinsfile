@@ -1,4 +1,3 @@
-def myFunctions = load 'groovy_scripts/myFunctions.groovy'
 
 pipeline {
     agent any
@@ -22,8 +21,6 @@ pipeline {
             steps {
                 script {
                     echo "${env.PRINT_OK}"
-                    myFunctions.printSomething()
-                    myFunctions.printWithColor("colored text")
                     sh 'mvn --version'
                     sh 'mvn install -DskipTests'
                 }
@@ -47,12 +44,4 @@ pipeline {
             }
         }
     }
-}
-
-def printSomething() {
-    echo "groovy func"
-}
-
-def printWithColor(param) {
-     echo "\u001B[31m${param}\u001B[0m" 
 }
