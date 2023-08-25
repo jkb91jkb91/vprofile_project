@@ -1,4 +1,3 @@
-
 pipeline {
     agent any
     tools {
@@ -11,7 +10,7 @@ pipeline {
     }
 
     stages {
-        stage('fetch code') {
+        stage('Fetch Code') {
             steps {
                 git branch: 'jenkins_sonar_nexus', url: "https://github.com/jkb91jkb91/vprofile_project/"
             }
@@ -51,6 +50,7 @@ pipeline {
                             -Dsonar.java.checkstyle.reportPaths=target/checkstyle-result.xml
                         """
                     }
+                }
             }
         }
     }
