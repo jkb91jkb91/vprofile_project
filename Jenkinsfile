@@ -48,7 +48,7 @@ pipeline {
                     def scannerHome = tool name: 'son4.7', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
                     withSonarQubeEnv('sonar') {
                         sh """
-                            export JAVA_HOME="/opt/java/openjdk"
+                            export JAVA_HOME=\"/opt/java/openjdk\"
                             ${scannerHome}/bin/sonar-scanner \
                             -Dsonar.login=$SONAR_TOKEN \
                             -Dsonar.projectKey=project_vprofile \
