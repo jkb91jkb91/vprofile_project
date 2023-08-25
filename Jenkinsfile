@@ -2,7 +2,7 @@ pipeline {
     agent any
     tools {
         maven "MAVEN3"
-        jdk "jdk8" // Nazwa skonfigurowanego JDK 8 w Jenkinsie
+        jdk "OracleJDK8"
     }
     environment {
         PRINT_OK='ok'
