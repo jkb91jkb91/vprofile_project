@@ -6,8 +6,7 @@ pipeline {
   environment {
     JDK_VERSION = 'OracleJDK8'
 
-    JAVA_HOME_8 = '/usr/local/jdk8'
-    JAVA_HOME_11='/opt/java/openjdk'
+    JAVA_HOME = '/usr/local/jdk8'
 
 
 
