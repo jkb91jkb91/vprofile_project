@@ -23,6 +23,7 @@ pipeline {
         stage('Build and Test') {
             steps {
                 script {
+                    tool name: 'OracleJDK8', type: 'hudson.model.JDK'
                     echo "${env.PRINT_OK}"
                     sh 'mvn --version'
                     sh 'mvn install -DskipTests'
