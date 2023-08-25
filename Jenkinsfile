@@ -5,8 +5,10 @@ pipeline {
         jdk "OracleJDK8"
     }
     environment {
-        PRINT_OK='ok'
-        PRINT_FAIL='fail'
+        PRINT_OK = 'ok'
+        PRINT_FAIL = 'fail'
+        projectName = 'my-project' // Zmień na nazwę swojego projektu
+        version = '1.0.0' // Zmień na odpowiednią wersję swojego projektu
     }
 
     stages {
@@ -39,22 +41,24 @@ pipeline {
 
         stage('Code Analysis') {
             steps {
-               nexusArtifactUploader(
-                   nexusVersion: 'nexus3',
-                   protocol: 'http',
-                   nexusUrl: 'http://172.17.0.3:8081/',
-                   groupId: 'QA',
-                   version: '1',
-                   repository: 'vprofile-repo',
-                   credentialsId: 'nexus'
-                   artifacts: [
-                    [artifactId: projectName,
-                    classifier: '',
-                    file: 'my-service-' + version + 'jar',
-                    typye: 'jar']
-                       ]
-
-                   }
+                script {
+                    nexusArtifactUploader(
+                        nexusVersion: 'nexus3',
+                        protocol: 'http',
+                        nexusUrl: 'http://172.17.0.3:8081/',
+                        groupId: 'QA',
+                        version: '1',
+                        repository: 'vprofile-repo',
+                        credentialsId: 'nexus',
+                        artifacts: [
+                            [artifactId: projectName,
+                             classifier: '',
+                             file: "my-service-${version}.jar",
+                             type: 'jar']
+                        ]
+                    )
+                }
+            }
         }
     }
 }
