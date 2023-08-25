@@ -1,14 +1,14 @@
+
+
+
+
 pipeline {
     agent any
-    tools {
+     tools {
         maven "MAVEN3"
-        jdk "OracleJDK8"
     }
     environment {
-        PRINT_OK = 'ok'
-        PRINT_FAIL = 'fail'
-        projectName = 'my-project' // Zmień na nazwę swojego projektu
-        version = '1.0.0' // Zmień na odpowiednią wersję swojego projektu
+        JDK_VERSION = 'OracleJDK8'
     }
 
     stages {
@@ -18,13 +18,12 @@ pipeline {
             }
         }
 
-        stage('Build') {
+        stage('Build and Test') {
             steps {
-                script {
-                    echo "${env.PRINT_OK}"
-                    sh 'mvn --version'
-                    sh 'mvn install -DskipTests'
-                }
+                tool name: 'OracleJDK8', type: 'hudson.model.JDK'
+                echo "${env.PRINT_OK}"
+                sh 'mvn --version'
+                sh 'mvn install -DskipTests'
             }
             post {
                 success {
@@ -35,13 +34,17 @@ pipeline {
 
         stage('Test') {
             steps {
+                script {
+                    tool name: env.JDK_VERSION, type: 'hudson.model.JDK'
+                }
                 sh 'mvn test'
             }
         }
 
-        stage('sonar') {
+        stage('SonarQube Analysis') {
             steps {
                 script {
+                    tool name: 'OracleJDK11', type: 'hudson.model.JDK'
                     def scannerHome = tool name: 'son4.7', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
                     withSonarQubeEnv('sonar') {
                         sh """
@@ -64,6 +67,7 @@ pipeline {
         stage('Code Analysis') {
             steps {
                 script {
+                    tool name: 'OracleJDK11', type: 'hudson.model.JDK'
                     nexusArtifactUploader(
                         nexusVersion: 'nexus3',
                         protocol: 'http',
