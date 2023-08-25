@@ -38,9 +38,10 @@ pipeline {
         }
 
         stage('Code Analysis') {
+            environment {
+                def scannerHome = tool name: 'son4.7'
+            }
             steps {
-                 script {
-                    def scannerHome = tool name: 'son4.7', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
                     withSonarQubeEnv('sonar') {
                          sh """
                             ${scannerHome}/bin/sonar-scanner \
@@ -50,7 +51,7 @@ pipeline {
                             -Dsonar.java.checkstyle.reportPaths=target/checkstyle-result.xml
                         """
                     }
-                }
+                
             }
         }
     }
