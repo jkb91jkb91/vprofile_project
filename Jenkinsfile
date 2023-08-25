@@ -1,16 +1,9 @@
 pipeline {
     agent any
+
     tools {
-        maven "MAVEN3"
-    }
-     parameters {
-        choice(name: 'JDK_VERSION', choices: ['OracleJDK8', 'OracleJDK11'], description: 'Select the JDK version')
-    }
-    environment {
-        PRINT_OK = 'ok'
-        PRINT_FAIL = 'fail'
-        projectName = 'my-project' // Zmień na nazwę swojego projektu
-        version = '1.0.0' // Zmień na odpowiednią wersję swojego projektu
+        // Definicja zmiennych JDK w sekcji tools
+        jdk 'OracleJDK8', 'OracleJDK11'
     }
 
     stages {
@@ -22,12 +15,11 @@ pipeline {
 
         stage('Build and Test') {
             steps {
-                script {
-                    tool name: 'OracleJDK8', type: 'hudson.model.JDK'
-                    echo "${env.PRINT_OK}"
-                    sh 'mvn --version'
-                    sh 'mvn install -DskipTests'
-                }
+                // Ustawienie JDK 8 jako narzędzia dla tego etapu
+                tool name: 'OracleJDK8', type: 'hudson.model.JDK'
+                echo "${env.PRINT_OK}"
+                sh 'mvn --version'
+                sh 'mvn install -DskipTests'
             }
             post {
                 success {
@@ -38,7 +30,7 @@ pipeline {
 
         stage('Test') {
             steps {
-                  script {
+                script {
                     // Ustawienie odpowiedniej wersji JDK
                     tool name: 'OracleJDK8', type: 'hudson.model.JDK'
                 }
@@ -49,6 +41,8 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 script {
+                    // Ustawienie JDK 11 jako narzędzia dla tego etapu
+                    tool name: 'OracleJDK11', type: 'hudson.model.JDK'
                     def scannerHome = tool name: 'son4.7', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
                     withSonarQubeEnv('sonar') {
                         sh """
@@ -71,6 +65,8 @@ pipeline {
         stage('Code Analysis') {
             steps {
                 script {
+                    // Ustawienie JDK 11 jako narzędzia dla tego etapu
+                    tool name: 'OracleJDK11', type: 'hudson.model.JDK'
                     nexusArtifactUploader(
                         nexusVersion: 'nexus3',
                         protocol: 'http',
