@@ -1,8 +1,8 @@
 
 
 Docker Images
--Jenkins
--Sonarqube
+-Jenkins (PLUGINS > Sonar scanner
+-Sonarqube (generate token called "jenkins")
 -Nexus
 
 
@@ -50,8 +50,9 @@ docker commit CONTAINERID sonar_image_commited
 
 
 NEXUS
-
-
+docker run -d -p 8081:8081 --name nexus -v nexus-data:/nexus-data sonatype/nexus3
+u:admin
+p:bjlm91
 
 
 
