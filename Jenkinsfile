@@ -53,7 +53,7 @@ pipeline {
                         artifacts: [
                             [artifactId: projectName,
                              classifier: '',
-                             file: "my-service-${version}.jar",
+                             file: 'target/vprofile-v1.war',
                              type: 'jar']
                         ]
                     )
