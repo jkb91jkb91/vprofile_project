@@ -49,7 +49,7 @@ pipeline {
                     withSonarQubeEnv('sonar') {
                         sh """
                             export JAVA_HOME=\"/opt/java/openjdk\"
-                            ${scannerHome}/bin/sonar-scanner \
+                            ${scannerHome}/bin/sonar-scanner -X \
                             -Dsonar.login=$SONAR_TOKEN \
                             -Dsonar.projectKey=project_vprofile \
                             -Dsonar.projectName=vprofile \
