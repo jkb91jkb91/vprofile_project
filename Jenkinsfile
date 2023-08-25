@@ -40,7 +40,17 @@ pipeline {
 
         stage('Code Analysis') {
             steps {
-                sh 'mvn checkstyle:checkstyle'
+                 script {
+                    def scannerHome = tool name: 'son4.7', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
+                    withSonarQubeEnv('sonar') {
+                         sh """
+                            ${scannerHome}/bin/sonar-scanner \
+                            -Dsonar.projectKey=project_vprofile \
+                            -Dsonar.projectName=vprofile \
+                            -Dsonar.sources=src/ \
+                            -Dsonar.java.checkstyle.reportPaths=target/checkstyle-result.xml
+                        """
+                    }
             }
         }
     }
