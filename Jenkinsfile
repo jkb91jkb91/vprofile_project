@@ -2,7 +2,9 @@ pipeline {
     agent any
     tools {
         maven "MAVEN3"
-        jdk "OracleJDK11"
+    }
+     parameters {
+        choice(name: 'JDK_VERSION', choices: ['OracleJDK8', 'OracleJDK11'], description: 'Select the JDK version')
     }
     environment {
         PRINT_OK = 'ok'
@@ -35,6 +37,10 @@ pipeline {
 
         stage('Test') {
             steps {
+                  script {
+                    // Ustawienie odpowiedniej wersji JDK
+                    tool name: 'OracleJDK8', type: 'hudson.model.JDK'
+                }
                 sh 'mvn test'
             }
         }
