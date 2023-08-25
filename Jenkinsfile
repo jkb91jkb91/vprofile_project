@@ -22,7 +22,7 @@ pipeline {
         stage('Build and Test') {
             steps {
                 tool name: env.JDK_VERSION, type: 'hudson.model.JDK'
-                sh 'export JAVA_HOME=$JAVA_HOME_8' // Ustawienie JAVA_HOME na JDK 8
+                sh 'export JAVA_HOME=$JAVA_HOME' // Ustawienie JAVA_HOME na JDK 8
                 echo "${env.PRINT_OK}"
                 sh 'mvn --version'
                 sh 'mvn install -DskipTests'
