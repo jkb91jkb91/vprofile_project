@@ -6,7 +6,6 @@ pipeline {
   environment {
     JDK_VERSION = 'OracleJDK8'
     JAVA_HOME = '/usr/local/jdk8'
-    SONAR_TOKEN = credentials('Secret text')
 }
 
 
@@ -50,7 +49,6 @@ pipeline {
                         sh """
                             export JAVA_HOME=\"/opt/java/openjdk\"
                             ${scannerHome}/bin/sonar-scanner -X \
-                            -Dsonar.login=$SONAR_TOKEN \
                             -Dsonar.projectKey=project_vprofile \
                             -Dsonar.projectName=vprofile \
                             -Dsonar.projectVersion=1.0 \
