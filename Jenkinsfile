@@ -75,7 +75,7 @@ pipeline {
                     nexusArtifactUploader(
                         nexusVersion: 'nexus3',
                         protocol: 'http',
-                        nexusUrl: 'nexus:8081/',
+                        nexusUrl: 'http://sonar:9000/',
                         groupId: 'QA',
                         version: '1',
                         repository: 'vprofile-repo',
