@@ -6,6 +6,7 @@ pipeline {
   environment {
     JDK_VERSION = 'OracleJDK8'
     JAVA_HOME = '/usr/local/jdk8'
+    SONAR_CREDENTIALS = credentials('sonar')
 }
 
 
@@ -45,23 +46,30 @@ pipeline {
             steps {
                 script {
                     def scannerHome = tool name: 'sonar4.7', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
-                    withEnv(['SONAR_TOKEN=sqa_bf205bdc272e19db4ab54f5bcb3d1945538040ea']) {
+        
+                    def sonarScannerCmd = """
+                        export JAVA_HOME=\"/opt/java/openjdk\"
+                        ${scannerHome}/bin/sonar-scanner -X \
+                        -Dsonar.projectKey=project_vprofile \
+                        -Dsonar.projectName=vprofile \
+                        -Dsonar.projectVersion=1.0 \
+                        -Dsonar.sources=src/ \
+                        -Dsonar.java.binaries=target/test-classes/com/visualpathit/account/controllerTest/ \
+                        -Dsonar.junit.reportsPath=target/surefire-report/ \
+                        -Dsonar.jacoco.reportsPath=target/jacoco.exec \
+                        -Dsonar.java.checkstyle.reportPaths=target/checkstyle-result.xml
+                    """
+        
+                    withCredentials([string(credentialsId: 'SONAR_CREDENTIALS', variable: 'SONAR_TOKEN')]) {
+                        sonarScannerCmd = sonarScannerCmd + " -Dsonar.login=\$SONAR_TOKEN"
+                    }
         
                     withSonarQubeEnv('sonar') {
                         sh """
-                            export JAVA_HOME=\"/opt/java/openjdk\"
-                            ${scannerHome}/bin/sonar-scanner -X \
-                            -Dsonar.projectKey=project_vprofile \
-                            -Dsonar.projectName=vprofile \
-                            -Dsonar.projectVersion=1.0 \
-                            -Dsonar.sources=src/ \
-                            -Dsonar.java.binaries=target/test-classes/com/visualpathit/account/controllerTest/ \
-                            -Dsonar.junit.reportsPath=target/surefire-report/ \
-                            -Dsonar.jacoco.reportsPath=target/jacoco.exec \
-                            -Dsonar.java.checkstyle.reportPaths=target/checkstyle-result.xml
+                            ${sonarScannerCmd}
                         """
                     }
-                    }
+                    
                 }
             }
         }
