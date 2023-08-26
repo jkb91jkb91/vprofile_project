@@ -46,29 +46,24 @@ pipeline {
             steps {
                 script {
                     def scannerHome = tool name: 'sonar4.7', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
-        
-                    def sonarScannerCmd = """
-                        export JAVA_HOME=\"/opt/java/openjdk\"
-                        ${scannerHome}/bin/sonar-scanner -X \
-                        -Dsonar.projectKey=project_vprofile \
-                        -Dsonar.projectName=vprofile \
-                        -Dsonar.projectVersion=1.0 \
-                        -Dsonar.sources=src/ \
-                        -Dsonar.java.binaries=target/test-classes/com/visualpathit/account/controllerTest/ \
-                        -Dsonar.junit.reportsPath=target/surefire-report/ \
-                        -Dsonar.jacoco.reportsPath=target/jacoco.exec \
-                        -Dsonar.java.checkstyle.reportPaths=target/checkstyle-result.xml
-                    """
-        
-                    withCredentials([string(credentialsId: 'SONAR_CREDENTIALS', variable: 'SONAR_TOKEN')]) {
-                        sonarScannerCmd = sonarScannerCmd + " -Dsonar.login=\$SONAR_TOKEN"
+                      withCredentials([usernamePassword(credentialsId: 'SONAR_CREDENTIALS')]) {
+                        withSonarQubeEnv('sonar') {
+                            sh """
+                                export JAVA_HOME=\"/opt/java/openjdk\"
+                                ${scannerHome}/bin/sonar-scanner -X \
+                                -Dsonar.projectKey=project_vprofile \
+                                -Dsonar.projectName=vprofile \
+                                -Dsonar.projectVersion=1.0 \
+                                -Dsonar.sources=src/ \
+                                -Dsonar.java.binaries=target/test-classes/com/visualpathit/account/controllerTest/ \
+                                -Dsonar.junit.reportsPath=target/surefire-report/ \
+                                -Dsonar.jacoco.reportsPath=target/jacoco.exec \
+                                -Dsonar.java.checkstyle.reportPaths=target/checkstyle-result.xml \
+                                -Dsonar.login=\$SONAR_USER -Dsonar.password=\$SONAR_PASSWORD
+                            """
+                        }
                     }
-        
-                    withSonarQubeEnv('sonar') {
-                        sh """
-                            ${sonarScannerCmd}
-                        """
-                    }
+                  
                     
                 }
             }
