@@ -46,7 +46,6 @@ pipeline {
             steps {
                 script {
                     def scannerHome = tool name: 'sonar4.7', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
-                      withCredentials([usernamePassword(credentialsId: 'sonar')]) {
                         withSonarQubeEnv('sonar') {
                             sh """
                                 export JAVA_HOME=\"/opt/java/openjdk\"
@@ -62,7 +61,7 @@ pipeline {
                                 -Dsonar.login=\$SONAR_USER -Dsonar.password=\$SONAR_PASSWORD
                             """
                         }
-                    }
+                    
                   
                     
                 }
