@@ -6,7 +6,7 @@ pipeline {
   environment {
     JDK_VERSION = 'OracleJDK8'
     JAVA_HOME = '/usr/local/jdk8'
-    SONAR_CREDENTIALS = credentials('sonar')
+    SONAR_TOKEN = credentials('sonarToken')
 }
 
 
@@ -58,7 +58,7 @@ pipeline {
                                 -Dsonar.junit.reportsPath=target/surefire-report/ \
                                 -Dsonar.jacoco.reportsPath=target/jacoco.exec \
                                 -Dsonar.java.checkstyle.reportPaths=target/checkstyle-result.xml \
-                                -Dsonar.login=\$SONAR_USER -Dsonar.password=\$SONAR_PASSWORD
+                                -Dsonar.login=\$SONAR_TOKEN
                             """
                         }
                     
