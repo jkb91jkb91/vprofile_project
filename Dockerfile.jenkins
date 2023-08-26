@@ -7,7 +7,7 @@ USER root
 RUN  apt-get update
 RUN  apt-get install -y wget
 RUN  apt-get install openjdk-11-jdk -y
-
+RUN ulimit -n 122880
 
 
 
@@ -19,10 +19,10 @@ RUN wget -c --header "Cookie: oraclelicense=accept-securebackup-cookie" http://d
 
 ENV JAVA_HOME_8=/usr/local/jdk1.8.0_131
 
-ENV JAVA_HOME_11=/usr/lib/jvm/java-11-openjdk-amd64
+ENV JAVA_HOME_11=/opt/java/openjdk
 
-#ENV PATH=$JAVA_HOME_8/bin:$PATH
-ENV PATH=$JAVA_HOME_8/bin:$JAVA_HOME_11/bin:$PATH
+ENV JAVA_HOME=${JAVA_HOME_8}:${JAVA_HOME_11}
+
 
 USER jenkins
 

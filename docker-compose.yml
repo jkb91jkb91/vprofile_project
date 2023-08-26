@@ -1,0 +1,27 @@
+version: '3.3'  # Upewnij się, że używasz odpowiedniej wersji
+
+services:
+  jenkins:
+    build:
+      context: .
+      dockerfile: Dockerfile.jenkins
+    volumes:
+      - ./jenkins_config:/var/jenkins_home  # Wolumen Jenkins
+    ulimits:
+      nofile:
+        soft: 122880  # Limit soft (zalecane)
+        hard: 122880  # Limit hard
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+
+  sonar:
+    image: sonarqube:latest
+    volumes:
+      - ./sonar_config/conf:/opt/sonarqube/conf  # Wolumen SonarQube
+      - ./sonar_config/data:/opt/sonarqube/data  # Wolumen SonarQube
+    ports:
+      - "9000:9000"
+      - "9092:9092"
+
+
