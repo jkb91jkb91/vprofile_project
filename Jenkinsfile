@@ -45,6 +45,8 @@ pipeline {
             steps {
                 script {
                     def scannerHome = tool name: 'sonar4.7', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
+                    withEnv(['SONAR_TOKEN=sqa_bf205bdc272e19db4ab54f5bcb3d1945538040ea']) {
+        
                     withSonarQubeEnv('sonar') {
                         sh """
                             export JAVA_HOME=\"/opt/java/openjdk\"
@@ -58,6 +60,7 @@ pipeline {
                             -Dsonar.jacoco.reportsPath=target/jacoco.exec \
                             -Dsonar.java.checkstyle.reportPaths=target/checkstyle-result.xml
                         """
+                    }
                     }
                 }
             }
