@@ -81,7 +81,7 @@ pipeline {
                         repository: 'vprofile-repo',
                         credentialsId: 'nexus',
                         artifacts: [
-                            [artifactId: projectName,
+                            [artifactId: 'projectName',
                              classifier: '',
                              file: 'target/vprofile-v1.war',
                              type: 'jar']
